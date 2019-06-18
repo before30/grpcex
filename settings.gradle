@@ -17,4 +17,5 @@ include 'grpcex-domain'
 include 'grpcex-client'
 include 'grpcex-server'
 include 'grpcex-discovery'
+include 'grpcex-redis'
 
