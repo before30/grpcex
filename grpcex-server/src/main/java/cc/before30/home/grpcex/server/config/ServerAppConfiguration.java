@@ -1,9 +1,14 @@
 package cc.before30.home.grpcex.server.config;
 
 import cc.before30.home.grpcex.server.service.GreeterService;
+import com.netflix.appinfo.EurekaInstanceConfig;
+import org.springframework.cloud.commons.util.InetUtils;
+import org.springframework.cloud.netflix.eureka.EurekaInstanceConfigBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
 
@@ -25,4 +30,5 @@ public class ServerAppConfiguration {
 //    public GreeterService greeterService() {
 //        return new GreeterService();
 //    }
+
 }
