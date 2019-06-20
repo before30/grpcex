@@ -53,6 +53,7 @@ public class HelloController {
             }
         }, executor);
 
+        greeterService.greets(name);
         return completableFuture;
     }
 }
