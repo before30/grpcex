@@ -7,12 +7,17 @@ ext {
     set('springCloudVersion', "Greenwich.SR1")
 }
 
+bootJar {
+    archiveFileName = 'grpcex-client'
+}
+
 docker {
-    dependsOn build
-    dockerfile file('src/main/docker/Dockerfile')
-    name "${project.group}/${bootJar.archiveFileName}"
-    files bootJar.archiveFileName
-    buildArgs(['JAR_FILE':"${bootJar.archiveFileName}"])
+    dependsOn(bootJar)
+    name = "${project.group}/${bootJar.archiveFileName.get()}:latest"
+    files(bootJar.archiveFile)
+    setDockerfile(file("src/main/docker/Dockerfile"))
+    buildArgs(['JAR_FILE':"${bootJar.archiveFileName.get()}"])
+    pull(true)
 }
 
 dependencies {
