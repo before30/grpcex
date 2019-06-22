@@ -18,4 +18,5 @@ include 'grpcex-client'
 include 'grpcex-server'
 include 'grpcex-discovery'
 include 'grpcex-redis'
+include 'sample-service'
 
