@@ -1,6 +1,5 @@
 package cc.before30.home.sample.domain.generic.money;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.math.BigDecimal;

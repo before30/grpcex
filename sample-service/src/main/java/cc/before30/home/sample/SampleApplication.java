@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
  * SampleApplication
@@ -18,6 +21,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @Slf4j
+@EnableJpaAuditing
+@EntityScan(
+        basePackageClasses = {Jsr310JpaConverters.class},
+        basePackages = {"cc.before30.home.sample.domain", "cc.before30.home.sample.infra"}
+)
 public class SampleApplication implements CommandLineRunner {
 
     public static void main(String[] args) {

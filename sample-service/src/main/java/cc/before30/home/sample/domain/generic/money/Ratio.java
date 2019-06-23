@@ -1,6 +1,7 @@
 package cc.before30.home.sample.domain.generic.money;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Ratio
@@ -10,6 +11,7 @@ import lombok.Getter;
  */
 
 @Getter
+@NoArgsConstructor
 public class Ratio {
     private double rate;
 
@@ -20,8 +22,6 @@ public class Ratio {
     public Ratio(double rate) {
         this.rate = rate;
     }
-
-    Ratio() {}
 
     public Money of(Money price) {
         return price.times(rate);

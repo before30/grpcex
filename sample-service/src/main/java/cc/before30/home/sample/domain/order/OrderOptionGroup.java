@@ -4,7 +4,6 @@ import cc.before30.home.sample.domain.BaseEntity;
 import cc.before30.home.sample.domain.generic.money.Money;
 import cc.before30.home.sample.domain.shop.OptionGroup;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
