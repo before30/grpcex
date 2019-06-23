@@ -22,10 +22,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 @Slf4j
 @EnableJpaAuditing
-@EntityScan(
-        basePackageClasses = {Jsr310JpaConverters.class},
-        basePackages = {"cc.before30.home.sample.domain", "cc.before30.home.sample.infra"}
-)
+//@EntityScan(
+//        basePackageClasses = {Jsr310JpaConverters.class},
+//        basePackages = {"cc.before30.home.sample.domain", "cc.before30.home.sample.infra"}
+//)
 public class SampleApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
