@@ -38,6 +38,13 @@ dependencies {
     runtimeOnly('com.h2database:h2')
     implementation('io.springfox:springfox-swagger2:2.9.2')
     implementation('io.springfox:springfox-swagger-ui:2.9.2')
+    implementation 'org.hibernate:hibernate-spatial:5.3.10.Final'
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '2.0.2-beta'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation group: 'org.hamcrest', name: 'hamcrest-library', version: '2.1'
+
+
 }
 
 dependencyManagement {
