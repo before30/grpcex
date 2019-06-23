@@ -28,7 +28,7 @@ public class OptionGroupSpecification extends BaseEntity {
     private static final long serialVersionUID = 2563731598436564369L;
 
     @Id
-    @Column(name = "OPTION_GROUP_SPECS")
+    @Column(name = "OPTION_GROUP_SPEC_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
