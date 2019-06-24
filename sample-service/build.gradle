@@ -14,10 +14,6 @@ springBoot {
     buildInfo()
 }
 
-println 'Hello World!'
-
-
-
 docker {
     dependsOn(bootJar)
     name = "${project.group}/${project.name}:latest"

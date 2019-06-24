@@ -7,12 +7,11 @@ ext {
 }
 
 bootJar {
-    archiveFileName = 'grpcex-discovery'
 }
 
 docker {
     dependsOn(bootJar)
-    name = "${project.group}/${bootJar.archiveFileName.get()}:latest"
+    name = "${project.group}/${project.name}:latest"
     files(bootJar.archiveFile)
     setDockerfile(file("src/main/docker/Dockerfile"))
     buildArgs(['JAR_FILE':"${bootJar.archiveFileName.get()}"])

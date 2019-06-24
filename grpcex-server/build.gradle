@@ -8,18 +8,16 @@ ext {
 }
 
 bootJar {
-    archiveFileName = 'grpcex-server'
 }
 
 docker {
     dependsOn(bootJar)
-    name = "${project.group}/${bootJar.archiveFileName.get()}:latest"
+    name = "${project.group}/${project.name}:latest"
     files(bootJar.archiveFile)
     setDockerfile(file("src/main/docker/Dockerfile"))
     buildArgs(['JAR_FILE':"${bootJar.archiveFileName.get()}"])
     pull(true)
 }
-
 dependencies {
     compile project(":grpcex-domain")
     implementation 'io.github.lognet:grpc-spring-boot-starter:3.3.0'
