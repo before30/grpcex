@@ -64,11 +64,12 @@ public class OrderLineItem extends BaseEntity {
         return Money.sum(groups, OrderOptionGroup::calculatePrice).times(count);
     }
 
+    private List<OptionGroup> convertToOptionGroups() {
+        return groups.stream().map(OrderOptionGroup::convertToOptionGroup).collect(toList());
+    }
+
     public void validate() {
         menu.validateOrder(name, convertToOptionGroups());
     }
 
-    private List<OptionGroup> convertToOptionGroups() {
-        return groups.stream().map(OrderOptionGroup::convertToOptionGroup).collect(toList());
-    }
 }
