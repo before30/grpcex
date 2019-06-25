@@ -1,6 +1,8 @@
 package cc.before30.home.sample.domain.shop;
 
 import cc.before30.home.sample.domain.BaseEntity;
+import cc.before30.home.sample.domain.order.OrderOption;
+import cc.before30.home.sample.domain.order.OrderOptionGroup;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
