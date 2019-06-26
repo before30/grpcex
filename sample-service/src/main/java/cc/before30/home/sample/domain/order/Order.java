@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Order
@@ -65,7 +66,12 @@ public class Order extends BaseEntity {
         this.orderLineItems.addAll(items);
     }
 
-    public void place() {
+    public List<Long> getMenuIds() {
+        return orderLineItems.stream().map(OrderLineItem::getId).collect(Collectors.toList());
+    }
+
+    public void place(OrderValidator orderValidator) {
+        orderValidator.validate(this);
         ordered();
     }
 
@@ -79,9 +85,10 @@ public class Order extends BaseEntity {
 
     public void delivered() {
         this.orderStatus = OrderStatus.DELIVERED;
+
     }
 
-    private Money calculateTotalPrice() {
+    public  Money calculateTotalPrice() {
         return Money.sum(orderLineItems, OrderLineItem::calculatePrice);
     }
 }

@@ -36,28 +36,30 @@ public class Menu extends BaseEntity {
     @Column(name = "FOOD_DESCRIPTION")
     private String description;
 
-    @OneToOne
-    @JoinColumn(name = "MENU_ID")
-    private Shop shop;
+//    @OneToOne
+//    @JoinColumn(name = "MENU_ID")
+//    private Shop shop;
+    @Column(name = "SHOP_ID")
+    private Long shopId;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "MENU_ID")
     private List<OptionGroupSpecification> optionGroupSpecs = new ArrayList<>();
 
-    public Menu(Shop shop, String name, String description,
+    public Menu(Long shopId, String name, String description,
                 OptionGroupSpecification basic, OptionGroupSpecification... groups) {
-        this(null, shop, name, description, basic, Arrays.asList(groups));
+        this(null, shopId, name, description, basic, Arrays.asList(groups));
     }
 
     @Builder
-    public Menu(Long id, Shop shop, String name, String description,
+    public Menu(Long id, Long shopId, String name, String description,
                 OptionGroupSpecification basic, List<OptionGroupSpecification> additives) {
         this.id = id;
-        this.shop = shop;
+        this.shopId = shopId;
         this.name = name;
         this.description = description;
 
-        this.shop.addMenu(this);
+//        this.shop.addMenu(this);
         this.optionGroupSpecs.add(basic);
         this.optionGroupSpecs.addAll(additives);
     }

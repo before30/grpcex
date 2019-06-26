@@ -33,9 +33,12 @@ public class OrderLineItem extends BaseEntity {
     @Column(name = "ORDER_LINE_ITEM_ID")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "MENU_ID")
-    private Menu menu;
+//    @ManyToOne
+//    @JoinColumn(name = "MENU_ID")
+//    private Menu menu;
+    @Column(name = "MENU_ID")
+    private Long menuId;
+
 
     @Column(name = "FOOD_NAME")
     private String name;
@@ -47,14 +50,14 @@ public class OrderLineItem extends BaseEntity {
     @JoinColumn(name = "ORDER_LINE_ITEM_ID")
     private List<OrderOptionGroup> groups = new ArrayList<>();
 
-    public OrderLineItem(Menu menu, String name, int count, List<OrderOptionGroup> groups) {
-        this(null, menu, name, count, groups);
+    public OrderLineItem(Long menuId, String name, int count, List<OrderOptionGroup> groups) {
+        this(null, menuId, name, count, groups);
     }
 
     @Builder
-    public OrderLineItem(Long id, Menu menu, String name, int count, List<OrderOptionGroup> groups) {
+    public OrderLineItem(Long id, Long menuId, String name, int count, List<OrderOptionGroup> groups) {
         this.id = id;
-        this.menu = menu;
+        this.menuId = menuId;
         this.name = name;
         this.count = count;
         this.groups.addAll(groups);
@@ -68,8 +71,8 @@ public class OrderLineItem extends BaseEntity {
         return groups.stream().map(OrderOptionGroup::convertToOptionGroup).collect(toList());
     }
 
-    public void validate() {
-        menu.validateOrder(name, convertToOptionGroups());
-    }
+//    public void validate() {
+//        menu.validateOrder(name, convertToOptionGroups());
+//    }
 
 }

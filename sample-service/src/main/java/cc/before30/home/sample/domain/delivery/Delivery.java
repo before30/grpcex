@@ -28,20 +28,22 @@ public class Delivery extends BaseEntity {
     @Column(name = "DELIVERY_ID")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "ORDER_ID")
-    private Order order;
+//    @OneToOne
+//    @JoinColumn(name = "ORDER_ID")
+//    private Order order;
+    @Column(name = "ORDER_ID")
+    private Long orderId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
     private DeliveryStatus deliveryStatus;
 
-    public static Delivery started(Order order) {
-        return new Delivery(order, DeliveryStatus.DELIVERING);
+    public static Delivery started(Long orderId) {
+        return new Delivery(orderId, DeliveryStatus.DELIVERING);
     }
 
-    public Delivery(Order order, DeliveryStatus deliveryStatus) {
-        this.order = order;
+    public Delivery(Long orderId, DeliveryStatus deliveryStatus) {
+        this.orderId = orderId;
         this.deliveryStatus = deliveryStatus;
     }
 
