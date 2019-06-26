@@ -36,9 +36,10 @@ public class Order extends BaseEntity {
     @Column(name = "USER_ID")
     private Long userId;
 
-    @ManyToOne
-    @JoinColumn(name = "SHOP_ID")
-    private Shop shop;
+//    @ManyToOne
+//    @JoinColumn(name = "SHOP_ID")
+    @Column(name = "SHOP_ID")
+    private Long shopId;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ORDER_ID")
@@ -51,40 +52,21 @@ public class Order extends BaseEntity {
     @Column(name = "STATUS")
     private OrderStatus orderStatus;
 
-    public Order(Long userId, Shop shop, List<OrderLineItem> items) {
-        this(userId, shop, items, LocalDateTime.now(), null);
+    public Order(Long userId, Long shopId, List<OrderLineItem> items) {
+        this(userId, shopId, items, LocalDateTime.now(), null);
     }
 
     @Builder
-    public Order(Long userId, Shop shop, List<OrderLineItem> items, LocalDateTime orderedTime, OrderStatus status) {
+    public Order(Long userId, Long shopId, List<OrderLineItem> items, LocalDateTime orderedTime, OrderStatus status) {
         this.userId = userId;
-        this.shop = shop;
+        this.shopId = shopId;
         this.orderedTime = orderedTime;
         this.orderStatus = status;
         this.orderLineItems.addAll(items);
     }
 
     public void place() {
-        validate();
         ordered();
-    }
-
-    private void validate() {
-        if (orderLineItems.isEmpty()) {
-            throw new IllegalStateException("주문 항목이 비어 있습니다.");
-        }
-
-        if (!shop.isOpen()) {
-            throw new IllegalArgumentException("가게가 영업중이 아닙니다.");
-        }
-
-        if (!shop.isValidOrderAmount(calculateTotalPrice())) {
-            throw new IllegalStateException(String.format("최소 주문 금액 %s 이상을 주문해주세요.", shop.getMinOrderAmount()));
-        }
-
-        for (OrderLineItem orderLineItem : orderLineItems) {
-            orderLineItem.validate();
-        }
     }
 
     private void ordered() {
@@ -97,7 +79,6 @@ public class Order extends BaseEntity {
 
     public void delivered() {
         this.orderStatus = OrderStatus.DELIVERED;
-        this.shop.billCommissionFee(calculateTotalPrice());
     }
 
     private Money calculateTotalPrice() {
