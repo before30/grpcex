@@ -1,0 +1,57 @@
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'com.palantir.docker'
+
+ext {
+    set('springCloudVersion', "Greenwich.SR1")
+}
+
+bootJar {
+}
+
+springBoot {
+    buildInfo()
+}
+
+docker {
+    dependsOn(bootJar)
+    name = "${project.group}/${project.name}:latest"
+    files(bootJar.archiveFile)
+    setDockerfile(file("src/main/docker/Dockerfile"))
+    buildArgs(['JAR_FILE':"${bootJar.archiveFileName.get()}"])
+    pull(true)
+}
+
+dependencies {
+    implementation 'io.github.lognet:grpc-spring-boot-starter:3.3.0'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        exclude group: 'junit', module: 'junit'
+    }
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    runtimeOnly('com.h2database:h2')
+    implementation('io.springfox:springfox-swagger2:2.9.2')
+    implementation('io.springfox:springfox-swagger-ui:2.9.2')
+    implementation 'org.hibernate:hibernate-spatial:5.3.10.Final'
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '2.0.2-beta'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation group: 'org.hamcrest', name: 'hamcrest-library', version: '2.1'
+
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
