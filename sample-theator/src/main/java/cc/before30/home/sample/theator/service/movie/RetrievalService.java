@@ -11,4 +11,5 @@ public class RetrievalService {
     // X월 X일 에 영화 & 상영 내역 조회
     // Y 영화 전체 사영 내역 조회
     // Y 영화 X월 X일 상영 내역 조회
+    // 사용자 Z의 예약 내역 조회
 }
