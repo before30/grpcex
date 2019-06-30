@@ -1,4 +1,4 @@
-package cc.before30.home.sample.theator.domain;
+package cc.before30.home.sample.theator.domain.reservation;
 
 import lombok.Builder;
 import lombok.Getter;

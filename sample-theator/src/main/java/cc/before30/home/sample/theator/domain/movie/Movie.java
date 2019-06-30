@@ -1,4 +1,4 @@
-package cc.before30.home.sample.theator.domain;
+package cc.before30.home.sample.theator.domain.movie;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -30,14 +30,14 @@ public class Movie {
     @Column(name = "RUNNING_TIME")
     private Long runningTime;
 
-    @Column(name = "FEE")
-    private Long fee;
+    @Column(name = "PRICE")
+    private Long price;
 
     @Builder
-    public Movie(Long id, String title, Long runningTime, Long fee) {
+    public Movie(Long id, String title, Long runningTime, Long price) {
         this.id = id;
         this.title = title;
         this.runningTime = runningTime;
-        this.fee = fee;
+        this.price = price;
     }
 }

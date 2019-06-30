@@ -1,5 +1,6 @@
-package cc.before30.home.sample.theator.domain;
+package cc.before30.home.sample.theator.domain.movie;
 
+import cc.before30.home.sample.theator.util.LocalDateTimePersistenceConverter;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,14 +32,15 @@ public class Showing {
     @Column(name = "SEQUENCE")
     private int sequence;
 
-    @Column(name = "SHOWING_TIME")
-    private LocalDateTime showingTime;
+    @Convert(converter = LocalDateTimePersistenceConverter.class)
+    @Column(name = "SHOWING_START_TIME")
+    private LocalDateTime showingStartTime;
 
     @Builder
-    public Showing(Long id, Long movieId, int sequence, LocalDateTime showingTime) {
+    public Showing(Long id, Long movieId, int sequence, LocalDateTime showingStartTime) {
         this.id = id;
         this.movieId = movieId;
         this.sequence = sequence;
-        this.showingTime = showingTime;
+        this.showingStartTime = showingStartTime;
     }
 }
