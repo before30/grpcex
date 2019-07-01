@@ -37,7 +37,7 @@ public class OrderMapper {
 
         return new Order(
                 cart.getUserId(),
-                shop,
+                shop.getId(),
                 cart.getCartLineItem()
                 .stream()
                 .map(this::toOrderLineItem)
@@ -49,7 +49,7 @@ public class OrderMapper {
                 .orElseThrow(IllegalArgumentException::new);
 
         return new OrderLineItem(
-                menu,
+                menu.getId(),
                 cartLineItem.getName(),
                 cartLineItem.getCount(),
                 cartLineItem.getGroups()
