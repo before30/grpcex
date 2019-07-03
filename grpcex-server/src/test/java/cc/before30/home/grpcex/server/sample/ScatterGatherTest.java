@@ -1,17 +1,17 @@
 package cc.before30.home.grpcex.server.sample;
 
+import com.netflix.client.Utils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
-import rx.Observable;
-import rx.schedulers.Schedulers;
+import reactor.core.scheduler.Schedulers;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -28,12 +28,9 @@ public class ScatterGatherTest {
     @Test
     public void testScatterGather() {
         ExecutorService executors = Executors.newFixedThreadPool(5);
-        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(5);
-
-
         List<Flux<String>> fluxList = IntStream.range(0, 10)
                 .boxed()
-                .map(i -> generateTask(scheduledExecutorService, i)).collect(Collectors.toList());
+                .map(i -> generateTask(executors, i)).collect(Collectors.toList());
 
         Mono<List<String>> merged = Flux.merge(fluxList).collectList();
 
@@ -44,10 +41,11 @@ public class ScatterGatherTest {
 
     }
 
-    public Flux<String> generateTask(ScheduledExecutorService scheduledExecutorService, int i) {
+    public Flux<String> generateTask(ExecutorService executorService, int i) {
         return Flux.<String>create(s -> {
+            Mono.delay(Duration.ofMillis(RandomUtils.nextInt(100, 200)));
             s.next(i + "-test");
             s.complete();
-        }).subscribeOn(scheduledExecutorService);
+        }).log().subscribeOn(Schedulers.fromExecutor(executorService));
     }
 }
