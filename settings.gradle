@@ -21,4 +21,6 @@ include 'grpcex-redis'
 include 'sample-service'
 include 'sample-theator'
 include 'test-server'
+include 'test-microservice'
+include 'test-gateway'
 
