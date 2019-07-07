@@ -20,4 +20,5 @@ include 'grpcex-discovery'
 include 'grpcex-redis'
 include 'sample-service'
 include 'sample-theator'
+include 'test-server'
 
