@@ -1,0 +1,5 @@
+rx:
+  grpc:
+    port: 8888
+    enableReflection: true
+    inProcessServerName: rx-grpc-server

@@ -1,0 +1,50 @@
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'com.palantir.docker'
+
+ext {
+    set('springCloudVersion', "Greenwich.SR1")
+}
+
+bootJar {
+}
+
+docker {
+    dependsOn(bootJar)
+    name = "${project.group}/${project.name}:latest"
+    files(bootJar.archiveFile)
+    setDockerfile(file("src/main/docker/Dockerfile"))
+    buildArgs(['JAR_FILE':"${bootJar.archiveFileName.get()}"])
+    pull(true)
+}
+dependencies {
+    compile project(":grpcex-domain")
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    compileOnly 'org.projectlombok:lombok'
+    testImplementation 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        exclude group: 'junit', module: 'junit'
+    }
+    implementation "io.grpc:grpc-netty:$grpc_version"
+    implementation "io.grpc:grpc-core:$grpc_version"
+    implementation "io.grpc:grpc-protobuf:$grpc_version"
+    implementation "io.grpc:grpc-stub:$grpc_version"
+    implementation "io.grpc:grpc-services:$grpc_version"
+    implementation "com.salesforce.servicelibs:reactor-grpc:$reactive_grpc_version"
+    implementation "com.salesforce.servicelibs:reactor-grpc-stub:$reactive_grpc_version"
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}

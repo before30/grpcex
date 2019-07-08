@@ -23,4 +23,5 @@ include 'sample-theator'
 include 'test-server'
 include 'test-microservice'
 include 'test-gateway'
+include 'grpcex-server2'
 

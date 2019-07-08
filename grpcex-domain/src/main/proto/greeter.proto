@@ -6,6 +6,8 @@ option java_package = "cc.before30.home.grpc.proto";
 service Greeter {
     // Sends a greeting
     rpc SayHello (HelloRequest) returns (HelloReply) {}
+    rpc MultiSayHello (HelloRequest) returns (stream HelloReply) {}
+    rpc StreamSayHello (stream HelloRequest) returns (stream HelloReply) {}
 }
 
 // The request message containing the user's name.
