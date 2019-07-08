@@ -13,6 +13,7 @@ import org.springframework.boot.CommandLineRunner;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Executor;
 
 /**
  * GrpcServerRunner
@@ -28,15 +29,18 @@ public class GrpcServerRunner implements CommandLineRunner, DisposableBean {
     private Server server;
     private final ServerBuilder<?> serverBuilder;
     private List<BindableService> services;
+    private final Executor executor;
 
     public GrpcServerRunner(HealthStatusManager healthStatusManager,
                             GrpcServerProperties grpcServerProperties,
                             ServerBuilder<?> serverBuilder,
-                            List<BindableService> services) {
+                            List<BindableService> services,
+                            Executor executor) {
         this.healthStatusManager = healthStatusManager;
         this.grpcServerProperties = grpcServerProperties;
         this.serverBuilder = serverBuilder;
         this.services = services;
+        this.executor = executor;
     }
 
     @Override

@@ -3,3 +3,8 @@ rx:
     port: 8888
     enableReflection: true
     inProcessServerName: rx-grpc-server
+nonrx:
+  grpc:
+    port: 9999
+    enableReflection: true
+    inProcessServerName: nonrx-grpc-server
