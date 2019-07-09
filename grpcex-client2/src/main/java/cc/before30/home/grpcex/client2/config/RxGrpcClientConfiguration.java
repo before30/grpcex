@@ -1,6 +1,8 @@
 package cc.before30.home.grpcex.client2.config;
 
+import cc.before30.home.grpc.proto.GreeterGrpc;
 import cc.before30.home.grpcex.client2.service.GrpcChannelFactory;
+import cc.before30.home.grpcex.client2.service.GrpcClient;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,5 +31,18 @@ public class RxGrpcClientConfiguration {
         return GrpcChannelFactory.createGrpcChannel(properties);
     }
 
+    @Bean
+    public GrpcClient grpcMultiSayHelloClient(@Qualifier("rxGrpcManagedChannel") ManagedChannel channel) {
+        return new GrpcClient(GreeterGrpc.getMultiSayHelloMethod(), channel);
+    }
 
+    @Bean
+    public GrpcClient grpcSayHelloClient(@Qualifier("rxGrpcManagedChannel") ManagedChannel channel) {
+        return new GrpcClient(GreeterGrpc.getSayHelloMethod(), channel);
+    }
+
+    @Bean
+    public GrpcClient grpcStreamSayHelloClient(@Qualifier("rxGrpcManagedChannel") ManagedChannel channel) {
+        return new GrpcClient(GreeterGrpc.getStreamSayHelloMethod(), channel);
+    }
 }
