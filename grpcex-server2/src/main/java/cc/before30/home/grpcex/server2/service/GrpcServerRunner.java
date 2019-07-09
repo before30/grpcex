@@ -1,9 +1,11 @@
 package cc.before30.home.grpcex.server2.service;
 
 import cc.before30.home.grpcex.server2.config.GrpcServerProperties;
-import io.grpc.BindableService;
-import io.grpc.Server;
-import io.grpc.ServerBuilder;
+import com.netflix.concurrency.limits.grpc.server.ConcurrencyLimitServerInterceptor;
+import com.netflix.concurrency.limits.grpc.server.GrpcServerLimiterBuilder;
+import com.netflix.concurrency.limits.limit.Gradient2Limit;
+import com.netflix.concurrency.limits.limit.WindowedLimit;
+import io.grpc.*;
 import io.grpc.health.v1.HealthCheckResponse;
 import io.grpc.protobuf.services.ProtoReflectionService;
 import io.grpc.services.HealthStatusManager;
@@ -50,7 +52,13 @@ public class GrpcServerRunner implements CommandLineRunner, DisposableBean {
         serverBuilder.addService(healthStatusManager.getHealthService());
 
         services.forEach(s -> {
-            serverBuilder.addService(s);
+            GrpcServerLimiterBuilder limit = new GrpcServerLimiterBuilder()
+                    .limit(WindowedLimit.newBuilder()
+                            .build(Gradient2Limit.newBuilder()
+                                    .build()));
+            ConcurrencyLimitServerInterceptor.Builder builder = ConcurrencyLimitServerInterceptor.newBuilder(limit.build());
+            ServerServiceDefinition intercept = ServerInterceptors.intercept(s, builder.build());
+            serverBuilder.addService(intercept);
             String serviceName = s.getClass().getName();
             healthStatusManager.setStatus(serviceName, HealthCheckResponse.ServingStatus.SERVING);
             log.info("'{}' service has been registered.", serviceName);

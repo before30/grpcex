@@ -24,4 +24,5 @@ include 'test-server'
 include 'test-microservice'
 include 'test-gateway'
 include 'grpcex-server2'
+include 'grpcex-client2'
 
