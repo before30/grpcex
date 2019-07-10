@@ -1,0 +1,4 @@
+dependencies {
+    implementation 'io.micrometer:micrometer-core:1.1.4'
+    annotationProcessor 'org.projectlombok:lombok'
+}
