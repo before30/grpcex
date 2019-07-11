@@ -9,5 +9,6 @@ package cc.before30.home.metric;
 public enum MyMetricType {
     PROD,
     DEV,
-    CONSOLE
+    CONSOLE,
+    TEST
 }

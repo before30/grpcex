@@ -1,8 +1,8 @@
 package cc.before30.home.metric.sender;
 
-import io.micrometer.core.lang.NonNull;
 import org.slf4j.Logger;
 
+import javax.annotation.Nonnull;
 import java.util.stream.Stream;
 
 /**
@@ -13,16 +13,11 @@ import java.util.stream.Stream;
  */
 public class Slf4jMetricSender implements MetricSender {
 
-    @NonNull
+    @Nonnull
     private final Logger logger;
 
-    public Slf4jMetricSender(@NonNull final Logger logger) {
+    public Slf4jMetricSender(@Nonnull final Logger logger) {
         this.logger = logger;
-    }
-
-    @Override
-    public void connect() {
-        logger.info("slf4j metric sender connected...");
     }
 
     @Override
@@ -31,8 +26,4 @@ public class Slf4jMetricSender implements MetricSender {
         events.forEach(it -> logger.info("{}", it));
     }
 
-    @Override
-    public void close() {
-        logger.info("slf4j metric sender closed...");
-    }
 }

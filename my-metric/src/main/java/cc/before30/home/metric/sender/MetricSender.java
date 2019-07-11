@@ -1,11 +1,5 @@
 package cc.before30.home.metric.sender;
 
-import io.micrometer.core.instrument.Meter;
-import io.micrometer.core.lang.NonNull;
-
-import java.io.Closeable;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 /**
@@ -14,15 +8,7 @@ import java.util.stream.Stream;
  * @author before30
  * @since 2019-07-10
  */
-public interface MetricSender extends Closeable {
-
-    /**
-     * Connect to target server to send metric record
-     */
-    default void connect() {
-        // Nothing to do.
-    }
-
+public interface MetricSender {
     /**
      * Write metric information
      *
@@ -30,6 +16,4 @@ public interface MetricSender extends Closeable {
      */
     void sendEvents(Stream<String> events);
 
-    @Override
-    void close();
 }

@@ -1,6 +1,8 @@
 package cc.before30.home.metric.sender;
 
+import cc.before30.home.metric.MyMetricConfig;
 import io.micrometer.core.ipc.http.HttpSender;
+import io.micrometer.core.ipc.http.HttpUrlConnectionSender;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,16 +21,17 @@ public class HttpMetricSender implements MetricSender {
 
     private final HttpSender httpSender;
     private final String url;
+    private final MyMetricConfig config;
 
-    public HttpMetricSender(String url, HttpSender httpSender) {
-        this.httpSender = httpSender;
+    public HttpMetricSender(MyMetricConfig config, String url) {
+        this.config = config;
         this.url = url;
+        httpSender = new HttpUrlConnectionSender();
     }
 
     @Override
     public void sendEvents(Stream<String> events) {
         AtomicInteger totalEvents = new AtomicInteger();
-
         try {
             httpSender.post(url)
                     .withJsonContent(events.peek(ev -> totalEvents.incrementAndGet()).collect(Collectors.joining(",","[","]")))
@@ -38,10 +41,5 @@ public class HttpMetricSender implements MetricSender {
         } catch (Throwable e) {
             log.warn("failed to send metrics to metric system", e);
         }
-    }
-
-    @Override
-    public void close() {
-        // Nothing to do
     }
 }

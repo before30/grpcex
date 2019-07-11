@@ -15,7 +15,11 @@ public interface MyMetricConfig extends StepRegistryConfig {
 
     String serviceName();
 
-    String instanceId();
+    String clusterName();
+
+    String hostName();
 
     String prefix();
+
+    String url();
 }

@@ -9,4 +9,10 @@ dependencies {
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:$jackson_version"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version"
 
+
+    testImplementation 'ru.lanwen.wiremock:wiremock-junit5:latest.release'
+    testImplementation 'com.github.tomakehurst:wiremock:latest.release'
+    testImplementation 'org.mockito:mockito-core:latest.release'
+    testCompile 'org.jsr107.ri:cache-ri-impl:1.0.0'
+
 }
