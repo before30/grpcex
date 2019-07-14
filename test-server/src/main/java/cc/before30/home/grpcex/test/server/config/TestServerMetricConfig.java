@@ -28,13 +28,23 @@ public class TestServerMetricConfig implements MyMetricConfig {
     }
 
     @Override
-    public String instanceId() {
-        return "test_instance";
+    public String clusterName() {
+        return null;
+    }
+
+    @Override
+    public String hostName() {
+        return null;
     }
 
     @Override
     public String prefix() {
         return "host";
+    }
+
+    @Override
+    public String url() {
+        return null;
     }
 
     @Override
